@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block titulo %}
-    Listado de Roles
+    Listado de Cursos
 {% endblock titulo %}
 
 {% block formulario %}
@@ -15,23 +15,17 @@
                 </div>
             {% endfor %}
         {% endif %}
-        <h1>Listado De Roles</h1>
+        <h1>Listado De Cursos</h1>
         <table>
             <thead>
                 <tr>
                     <th>Nombre</th>
-                    <th>Roles y permisos</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
-            {% for rol in roles %}
+            {% for curso in cursos %}
                 <tbody>
-                    <td>{{rol.name}}</td>
-                    <td>{% for permiso in rol.permissions.all %}
-                        <div>
-                            {{forloop.counter}}-{{permiso.name}}
-                        </div>
-                        {% endfor %}</td>
+                    <td>{{curso.nombre}}</td>
                         <td> 
                             <a href="{% url 'eliminar_rol' rol.pk %}" class="action-link delete-link">
                                 <i class="fas fa-trash"></i>
@@ -43,7 +37,7 @@
                 </tbody>
             {% endfor %}
         </table>
-        <button><a style="text-decoration: none; color: aliceblue;" href="{% url 'registrar_rol'  %}">Crear Rol</a></button>
+        <button><a style="text-decoration: none; color: aliceblue;" href="{% url 'registrar_curso'  %}">Crear Curso</a></button>
     </div>
     <script>
         // Hacer que los mensajes desaparezcan después de 5 segundos

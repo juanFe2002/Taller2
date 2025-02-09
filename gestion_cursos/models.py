@@ -19,7 +19,7 @@ class Cursos(models.Model):
         
         default_permissions = ()
         permissions = (
-            ('crear_curso', 'Puede Crear Curso'),
+            ('registrar_curso', 'Puede Crear Curso'),
             ('listar_cursos', 'Puede Consultar Cursos'),
             ('actualizar_curso', 'Puede Actualizar Curso'),
             ('eliminar_curso', 'Puede Eliminar Curso'),  
@@ -51,7 +51,7 @@ class Materias(models.Model):
         
         default_permissions = ()
         permissions = (
-            ('crear_materia', 'Puede Crear Materia'),
+            ('registrar_materia', 'Puede Crear Materia'),
             ('listar_materias', 'Puede Consultar Materias'),
             ('actualizar_materia', 'Puede Actualizar Materia'),
             ('eliminar_materia', 'Puede Eliminar Materia'),

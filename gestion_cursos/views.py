@@ -19,7 +19,7 @@ class ListaCurso(MultiplePermissionsRequiredMixin, ListView):
     model = Cursos
     template_name = 'gestion_cursos/listar_cursos.html'
     context_object_name = 'cursos' 
-    permissions = {"any": ('gestion_cursos.listar_cursos', 'gestion_cursos.crear_curso', 'gestion_cursos.actualizar_curso', 'gestion_cursos.eliminar_curso')}
+    permissions = {"any": ('gestion_cursos.listar_cursos', 'gestion_cursos.registrar_curso', 'gestion_cursos.actualizar_curso', 'gestion_cursos.eliminar_curso')}
 
 
 class CrearCurso(PermissionRequiredMixin, SuccessMessageMixin, CreateView):
@@ -31,8 +31,8 @@ class CrearCurso(PermissionRequiredMixin, SuccessMessageMixin, CreateView):
     
     model = Cursos
     form_class = CursosForm
-    template_name = 'gestion_cursos/crear_curso.html'
-    permission_required = 'gestion_cursos.crear_curso'
+    template_name = 'gestion_cursos/registrar_curso.html'
+    permission_required = 'gestion_cursos.registrar_curso'
     success_url = reverse_lazy('listar_cursos')
     success_message = "El Curso fue creado exitosamente"
     
@@ -111,7 +111,7 @@ class ListaMateria(MultiplePermissionsRequiredMixin, ListView):
     model = Materias
     template_name = 'gestion_materias/listar_materias.html'
     context_object_name = 'materias' 
-    permissions = {"any": ('gestion_materias.listar_materias', 'gestion_materias.crear_materia', 'gestion_materias.actualizar_materia','gestion_materias.detalle_materia','gestion_materias.eliminar_materia')}
+    permissions = {"any": ('gestion_materias.listar_materias', 'gestion_materias.registrar_materia', 'gestion_materias.actualizar_materia','gestion_materias.detalle_materia','gestion_materias.eliminar_materia')}
 
 
 class VistaMateria(PermissionRequiredMixin, DetailView):
@@ -137,8 +137,8 @@ class CrearMateria(PermissionRequiredMixin, SuccessMessageMixin, CreateView):
     
     model = Materias
     form_class = MateriasForm
-    template_name = 'gestion_materias/crear_materia.html'
-    permission_required = 'gestion_materias.crear_materia'
+    template_name = 'gestion_materias/registrar_materia.html'
+    permission_required = 'gestion_materias.registrar_materia'
     success_url = reverse_lazy('listar_materias')
     success_message = "La Materia fue creado exitosamente"
     

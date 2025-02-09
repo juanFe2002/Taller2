@@ -56,5 +56,6 @@ class Roles(models.Model):
             ('registrar_rol', 'Puede Registrar Rol'),
             ('consultar_roles', 'Puede Consultar Roles'),
             ('actualizar_rol', 'Puede Actualizar Rol'),
+            ('eliminar_rol', 'Puede eliminar Rol'),
         )
     

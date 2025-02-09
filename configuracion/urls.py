@@ -20,7 +20,8 @@ from gestion_usuarios.views import Login, Inicio
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path("ingresar", view=Login.as_view(), name='login'),
-    # path("", view=Inicio.as_view(), name='inicio'),
+    path("ingresar", view=Login.as_view(), name='login'),
+    path("", view=Inicio.as_view(), name='inicio'),
     path("gestion_usuarios/", include("gestion_usuarios.urls")),
+    path("gestion_cursos/", include("gestion_cursos.urls")),
 ]
