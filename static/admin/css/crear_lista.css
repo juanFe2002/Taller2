@@ -1,0 +1,115 @@
+body{
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+h1 {
+    font-size: 24px;
+    color: #444febea;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    padding: 20px; 
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.form input[type="text"],
+.form select,
+form input[type="date"],
+.form input[type ="number"]
+form input[type ="email"]
+{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box; 
+    
+}
+
+form button {
+    background-color: #4a90e2;
+    color:#fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+form a {
+    text-decoration: none;
+    color: #ddd;
+}
+
+form button:hover{
+    background-color: #357abd;
+}
+
+
+.btn {
+    display: block;
+    background-color: #11e493;
+    text-decoration: none;
+    text-align: center;
+    color:#fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    width: 95%;
+    margin-top: 10px;
+}
+
+.btn:hover{
+    background-color: #89f568;
+}
+
+.errores {
+    background-color: #ffebee;
+    border: 1px solid #ef5350;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.error-field {
+    color: #d32f2f;
+    margin: 5px 0;
+}
+
+/* Para los mensajes de error que aparecen junto a cada campo */
+.errorlist {
+    color: #d32f2f;
+    list-style: none;
+    padding: 0;
+    margin: 5px 0;
+}
+
+
+@media (max-width: 600px){
+    form {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+}

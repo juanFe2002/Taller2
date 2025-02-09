@@ -1,0 +1,78 @@
+{% extends "baseHTML/base_crear.html" %}
+{% load static %}
+
+{% block titulo %}
+    {% if form.instance.pk %}Editar Usuario {%else %}Crear Usuario {% endif %}
+{% endblock titulo %}
+
+{% block formulario %}
+    <div class="col-10">
+        <form class="form" method="post" action="{% if form.instance.pk %}{% url 'actualizar_usuario' form.instance.pk %}{%else %}{% url 'registrar_usuario' %}{% endif %}">
+                    <h1>{% if form.instance.pk %} Actualizar Usuario {%else %} Crear Usuario {% endif %}</h1> 
+                {%csrf_token%}
+
+                {% comment %} Validacion de errores {% endcomment %}
+                {% if form.errors %}
+                    <div class="errores">
+                        {% for field in form %}
+                            {% if field.errors %}
+                                <div class="error-field">
+                                    {{ field.label }}: {{ field.errors }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for=""> Tipo de Identificacion</label>
+                        {{form.tipo_identificacion}}
+                    </div>
+                    <div class="col-md-4">
+                        <label for=""> Identificacion</label>
+                        {{form.identificacion}}
+                    </div>
+                    <div class="col-md-4">
+                        <label for=""> Primer Nombre</label>
+                        {{form.first_name}}
+                    </div>
+                    <div class="col-md-4">
+                        <label for=""> Apellido</label>
+                        {{form.last_name}}
+                    </div>
+                    <div class="col-md-4">
+                        <label for=""> Email</label>
+                        {{form.email}}
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Genero</label>
+                        {{form.genero}}
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Ciudad</label>
+                        {{form.ciudad}}
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Telefono</label>
+                        {{form.telefono}}
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Roles</label>
+                        {{form.groups}}
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Permisos de Usuario</label>
+                        {{form.user_permissions}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="submit">{% if form.instance.pk %} Editar Usuario {%else %} Crear Usuario {% endif %}</button>
+                    </div>
+                    <div class="col-md-6">
+                        <a class="btn" href="{% url 'listado_usuarios'  %}">Volver</a>
+                    </div>    
+                </div>
+        </form>
+    </div>
+{% endblock formulario %}

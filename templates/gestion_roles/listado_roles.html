@@ -1,0 +1,56 @@
+{% extends "baseHTML/base_listar.html" %}
+{% load static %}
+
+{% block titulo %}
+    Listado de Roles
+{% endblock titulo %}
+
+{% block formulario %}
+    <div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+                    {{ message }}
+                    <span class="close-btn" onclick="this.parentElement.style.display='none'">&times;</span>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <h1>Listado De Roles</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Roles y permisos</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            {% for rol in roles %}
+                <tbody>
+                    <td>{{rol.name}}</td>
+                    <td>{% for permiso in rol.permissions.all %}
+                        <div>
+                            {{forloop.counter}}-{{permiso.name}}
+                        </div>
+                        {% endfor %}</td>
+                    <td> 
+                        <a href="{% url 'eliminar_rol' rol.pk %}" class="action-link delete-link">
+                            <i class="bi bi-trash3-fill"></i>
+                        </a>
+                        <a href="{% url 'actualizar_rol' rol.pk %}" class="action-link edit-link">
+                            <i class="bi bi-pencil-fill"></i>
+                    </td>
+                </tbody>
+            {% endfor %}
+        </table>
+        <button><a style="text-decoration: none; color: aliceblue;" href="{% url 'registrar_rol'  %}">Crear Rol</a></button>
+    </div>
+    <script>
+        // Hacer que los mensajes desaparezcan después de 5 segundos
+        setTimeout(function() {
+            var messages = document.getElementsByClassName('message');
+            for (var i = 0; i < messages.length; i++) {
+                messages[i].style.display = 'none';
+            }
+        }, 5000);
+    </script>
+{% endblock formulario %}

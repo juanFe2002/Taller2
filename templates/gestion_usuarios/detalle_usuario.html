@@ -1,0 +1,38 @@
+{% extends "baseHTML/base_detalle.html" %}
+{% load static %}
+
+{% block titulo %}
+    Detalle
+{% endblock titulo %}
+
+
+{% block formulario %}
+    <div class="card">
+        <h1 class="card-title" >Detalles del Usuario</h1>
+        <div class="card-body">
+            <p class="card-text">Tipo de Identificacion: {{ usuario.tipo_identificacionro }}</p>
+            <p>Identificacion: {{ usuario.identificacion }}</p>
+            <p>Primero Nombre: {{ usuario.first_name }}</p>
+            <p>Apellido: {{ usuario.last_name}}</p>
+            <p>Email: {{ usuario.email }}</p>
+            <p>Genero: {{ usuario.genero }}</p>
+            <p>Ciudad: {{ usuario.ciudad }}</p>
+            <p>Telefono: {{ usuario.telefono }}</p>
+            <p>
+                {% for rol in usuario.groups.all %}
+                <div>
+                    {{forloop.counter}}-{{rol.name}}
+                </div>
+                {% endfor %}
+            </p>
+            <p>
+                {% for permiso in usuario.user_permissions.all %}
+                <div>
+                    {{forloop.counter}}-{{permiso.name}}
+                </div>
+                {% endfor %}
+            </p>
+        </div>
+        <button class="button"><a style="text-decoration: none; color: adivceblue;" href="{% url 'listado_usuarios' %}">Volver al Listado</a></button>
+    </div>
+{% endblock formulario %}

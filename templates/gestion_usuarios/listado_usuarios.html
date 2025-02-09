@@ -1,0 +1,83 @@
+{% extends "baseHTML/base_listar.html" %}
+{% load static %}
+
+{% block titulo %}
+    Listado de Usuarios
+{% endblock titulo %}
+
+{% block formulario %}
+    <div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+                    {{ message }}
+                    <span class="close-btn" onclick="this.parentElement.style.display='none'">&times;</span>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <h1>Listado De Usuarios</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tipo de Indentificacion</th>
+                    <th>Identificacion</th>
+                    <th>Primer Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Genero</th>
+                    <th>Ciudad</th>
+                    <th>Telefono</th>
+                    <th>Roles</th>
+                    <th>Permisos</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            {% for usuario in usuarios %}
+                <tbody>
+                    <td>{{usuario.tipo_identificacion}}</td>
+                    <td>{{usuario.identificacion}}</td>
+                    <td>{{usuario.first_name}}</td>
+                    <td>{{usuario.last_name}}</td>
+                    <td>{{usuario.email}}</td>
+                    <td>{{usuario.genero}}</td>
+                    <td>{{usuario.ciudad}}</td>
+                    <td>{{usuario.telefono}}</td>
+                    <td>
+                        {% for rol in usuario.groups.all %}
+                        <div>
+                            {{forloop.counter}}-{{rol.name}}
+                        </div>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for permiso in usuario.user_permissions.all %}
+                        <div>
+                            {{forloop.counter}}-{{permiso.name}}
+                        </div>
+                        {% endfor %}
+                    </td>
+                    <td> 
+                        <a href="{% url 'eliminar_usuario' usuario.pk %}" class="action-link delete-link">
+                            <i class="bi bi-trash3-fill"></i>
+                        </a>
+                        <a href="{% url 'actualizar_usuario' usuario.pk %}" class="action-link edit-link">
+                            <i class="bi bi-pencil-fill"></i>
+                        </a>
+                        <a href="{% url 'detalle_usuario' usuario.pk %}" class="action-link read-link">
+                            <i class="bi bi-eye-fill"></i>
+                    </td>
+                </tbody>
+            {% endfor %}
+        </table>
+        <button><a style="text-decoration: none; color: aliceblue;" href="{% url 'registrar_usuario'  %}">Crear Usuario</a></button>
+    </div>
+    <script>
+        // Hacer que los mensajes desaparezcan después de 5 segundos
+        setTimeout(function() {
+            var messages = document.getElementsByClassName('message');
+            for (var i = 0; i < messages.length; i++) {
+                messages[i].style.display = 'none';
+            }
+        }, 5000);
+    </script>
+{% endblock formulario %}
