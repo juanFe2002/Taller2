@@ -16,13 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import RedirectView
-from gestion_usuarios.views import Login, Inicio
+from gestion_usuarios.views import Login, Inicio, Logout
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('ingresar/', Login.as_view(), name='login'),  # Ruta para el login
-    path('inicio/', Inicio.as_view(), name='inicio'),  # Ruta para la página de inicio
-    path('', RedirectView.as_view(url='ingresar/')),  # Redirige la ruta raíz a la página de login
+    path('ingresar/', Login.as_view(), name='login'),
+    path('inicio/', Inicio.as_view(), name='inicio'),
+    path('salir/', Logout.as_view(), name='logout'),  # Agrega esta línea
+    path('', RedirectView.as_view(url='ingresar/')),
     path('gestion_usuarios/', include('gestion_usuarios.urls')),
     path('gestion_cursos/', include('gestion_cursos.urls')),
+    path('gestion_inscripciones/', include('gestion_inscripciones.urls')),
 ]

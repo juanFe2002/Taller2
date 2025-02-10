@@ -41,9 +41,9 @@ class Usuario(AbstractUser):
         
     
     def save(self, *args, **kwargs):
-        if not self.username:  # Si el username no está definido
-            self.username = self.email  # Usa el email como username
-        if not self.pk:  # Solo si es un nuevo usuario
+        if not self.username:
+            self.username = self.email
+        if not self.pk:
             self.set_password(self.first_name + self.last_name + '-' + str(self.identificacion))
         super(Usuario, self).save(*args, **kwargs)
     

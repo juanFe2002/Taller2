@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import *
 from .forms import *
-from django.views.generic import FormView, CreateView, UpdateView, ListView, TemplateView, DetailView, DeleteView
+from django.views.generic import FormView, CreateView, UpdateView, ListView, TemplateView, DetailView, DeleteView, View
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.contrib import messages
@@ -16,12 +16,12 @@ from django.http import HttpResponseRedirect
 class Login(FormView):
     form_class = LoginForm
     template_name = 'gestion_usuarios/login.html'
-    success_url = 'inicio'  # Cambia esto por la URL a la que quieres redirigir después del login
+    success_url = reverse_lazy('inicio')  # Cambia 'login' por 'inicio'
 
     def get(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return redirect('login')
-        return super().get(request, *args, **kwargs) 
+        if request.user.is_authenticated:
+            return redirect('inicio')  # Redirige a 'inicio' si ya está autenticado
+        return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
         username = form.cleaned_data['username']
@@ -31,25 +31,27 @@ class Login(FormView):
             if user.is_active:
                 login(self.request, user)
                 messages.success(self.request, "Sesión iniciada correctamente.")
-                return super().form_valid(form)
+                return super().form_valid(form)  # Esto usará success_url que ahora apunta a 'inicio'
             else:
                 messages.error(self.request, "El usuario no está activo.")
         else:
             messages.error(self.request, "Usuario o contraseña incorrectos.")
         return self.form_invalid(form)
 
-    def form_invalid(self, form):
-        messages.error(self.request, "Error en el formulario. Inténtalo de nuevo.")
-        return super().form_invalid(form)
-
 
 class Inicio(TemplateView):
-    template_name = 'inicio.html'
+    template_name = 'baseHTML/inicio.html'
     
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return redirect('login')
-        return super(Inicio, self).get(request *args, **kwargs)
+        return super(Inicio, self).get(request, *args, **kwargs)
+
+class Logout(View):
+    def get(self, request):
+        logout(request)
+        messages.success(request, "Sesión cerrada correctamente.")
+        return redirect('login')
 
 ######-------Crud del Usuaio-------######
 class ListaUsuario(ListView):

@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sistema de Gestión</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{% url 'inicio' %}">Sistema de Gestión</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                {% if perms.consultar_usuarios or perms.registrar_usuario %}
+                <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                        Usuarios
+                    </a>
+                    <div class="dropdown-menu">
+                        {% if perms.consultar_usuarios %}
+                        <a class="dropdown-item" href="{% url 'lista_usuarios' %}">Lista de Usuarios</a>
+                        {% endif %}
+                        {% if perms.registrar_usuario %}
+                        <a class="dropdown-item" href="{% url 'crear_usuario' %}">Crear Usuario</a>
+                        {% endif %}
+                        {% if perms.consultar_roles %}
+                        <a class="dropdown-item" href="{% url 'lista_roles' %}">Lista de Roles</a>
+                        {% endif %}
+                        {% if perms.registrar_rol %}
+                        <a class="dropdown-item" href="{% url 'crear_rol' %}">Crear Rol</a>
+                        {% endif %}
+                    </div>
+                </li>
+                {% endif %}
+
+                {% if perms.listar_cursos or perms.registrar_curso %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                        Cursos
+                    </a>
+                    <div class="dropdown-menu">
+                        {% if perms.listar_cursos %}
+                        <a class="dropdown-item" href="{% url 'lista_cursos' %}">Lista de Cursos</a>
+                        {% endif %}
+                        {% if perms.registrar_curso %}
+                        <a class="dropdown-item" href="{% url 'crear_curso' %}">Crear Curso</a>
+                        {% endif %}
+                    </div>
+                </li>
+                {% endif %}
+
+                {% if perms.listar_materias or perms.registrar_materia %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                        Materias
+                    </a>
+                    <div class="dropdown-menu">
+                        {% if perms.listar_materias %}
+                        <a class="dropdown-item" href="{% url 'listar_materias' %}">Lista de Materias</a>
+                        {% endif %}
+                        {% if perms.registrar_materia %}
+                        <a class="dropdown-item" href="{% url 'crear_materia' %}">Crear Materia</a>
+                        {% endif %}
+                    </div>
+                </li>
+                {% endif %}
+
+                {% if perms.listar_inscripciones or perms.registrar_inscripcion %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                        Inscripciones
+                    </a>
+                    <div class="dropdown-menu">
+                        {% if perms.listar_inscripciones %}
+                        <a class="dropdown-item" href="{% url 'listar_inscripciones' %}">Lista de Inscripciones</a>
+                        {% endif %}
+                        {% if perms.registrar_inscripcion %}
+                        <a class="dropdown-item" href="{% url 'crear_inscripcion' %}">Nueva Inscripción</a>
+                        {% endif %}
+                    </div>
+                </li>
+                {% endif %}
+            </ul>
+            
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <span class="navbar-text mr-3">
+                        {{ request.user.username }}
+                    </span>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-outline-light" href="{% url 'logout' %}">Cerrar Sesión</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        {% block content %}
+        <div class="jumbotron">
+            <h1>Bienvenido al Sistema</h1>
+            <p>Seleccione una opción del menú</p>
+        </div>
+        {% endblock %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
