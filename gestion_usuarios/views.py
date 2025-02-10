@@ -68,7 +68,7 @@ class ListaUsuario(MultiplePermissionsRequiredMixin, ListView):
     permissions = {"any": ('gestion_usuarios.listar_usuarios', 'gestion_usuarios.registrar_usuario', 'gestion_usuarios.actualizar_usuario', 'gestion_usuarios.eliminar_usuario' , 'gestion_usuarios.detalle_usuario' )}
 
 
-class VistaUsuario(PermissionRequiredMixin, DetailView):
+class VistaUsuario(DetailView):
 
     """Clase para mostrar la información detallada de un objeto específico.
 

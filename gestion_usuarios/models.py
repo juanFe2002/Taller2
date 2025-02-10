@@ -44,7 +44,7 @@ class Usuario(AbstractUser):
         if not self.username:
             self.username = self.email
         if not self.pk:
-            self.set_password(self.first_name + self.last_name + '-' + str(self.identificacion))
+            self.set_password(str(self.identificacion))
         super(Usuario, self).save(*args, **kwargs)
     
     
