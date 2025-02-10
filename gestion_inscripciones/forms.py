@@ -11,8 +11,8 @@ class IncripcionForm(forms.ModelForm):
         model = Inscripcion
         fields = ['estudiante','curso','fhecha_inscripcion']
         widgets = {
-            'estudiante': forms.TextInput(attrs={'class':'form-control'}),  
-            'curso': forms.TextInput(attrs={'class':'form-control'}),  
+            'estudiante': forms.Select(attrs={'class':'form-control'}),  
+            'curso': forms.Select(attrs={'class':'form-control'}),  
             'fhecha_inscripcion': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),       
             }
     

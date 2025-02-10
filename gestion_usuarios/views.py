@@ -5,6 +5,7 @@ from django.views.generic import FormView, CreateView, UpdateView, ListView, Tem
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.contrib import messages
+from braces.views import PermissionRequiredMixin, MultiplePermissionsRequiredMixin
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required 
@@ -54,7 +55,7 @@ class Logout(View):
         return redirect('login')
 
 ######-------Crud del Usuaio-------######
-class ListaUsuario(ListView):
+class ListaUsuario(MultiplePermissionsRequiredMixin, ListView):
     """Clase para proporcionar una vista que muestra una lista de objetos.
 
     :param ListView: Permite visualizar una vista
@@ -62,12 +63,12 @@ class ListaUsuario(ListView):
     """       
     
     model = Usuario
-    template_name = 'gestion_usuarios/listado_usuarios.html'
+    template_name = 'gestion_usuarios/listar_usuarios.html'
     context_object_name = 'usuarios' 
-    permissions = {"any": ('gestion_usuarios.registrar_usuario', 'gestion_usuarios.consultar_usuarios', 'gestion_usuarios.actualizar_usuario', 'gestion_usuarios.eliminar_usuario' , 'gestion_usuarios.detalle_usuario' )}
+    permissions = {"any": ('gestion_usuarios.listar_usuarios', 'gestion_usuarios.registrar_usuario', 'gestion_usuarios.actualizar_usuario', 'gestion_usuarios.eliminar_usuario' , 'gestion_usuarios.detalle_usuario' )}
 
 
-class VistaUsuario(DetailView):
+class VistaUsuario(PermissionRequiredMixin, DetailView):
 
     """Clase para mostrar la información detallada de un objeto específico.
 
@@ -81,7 +82,7 @@ class VistaUsuario(DetailView):
     success_url = reverse_lazy('usuarios')
 
 
-class CrearUsuario(SuccessMessageMixin, CreateView):
+class CrearUsuario(PermissionRequiredMixin, SuccessMessageMixin, CreateView):
     """Clase que permite la creación de un nuevo objeto en la base de datos.
 
     :param CreateView: Maneja la creacion de objetos
@@ -92,7 +93,7 @@ class CrearUsuario(SuccessMessageMixin, CreateView):
     form_class = RegistrarUsuarioForm
     template_name = 'gestion_usuarios/registrar_usuario.html'
     permission_required = 'gestion_usuarios.registrar_usuario'
-    success_url = reverse_lazy('listado_usuarios')
+    success_url = reverse_lazy('listar_usuarios')
     success_message = "El Usuario, fue creado exitosamente"
     
     def form_invalid(self, form):
@@ -106,7 +107,7 @@ class CrearUsuario(SuccessMessageMixin, CreateView):
         return form
 
 
-class ActualizarUsuario(SuccessMessageMixin, UpdateView):
+class ActualizarUsuario(PermissionRequiredMixin, SuccessMessageMixin, UpdateView):
     """Clase que permite la ctualización de los datos de un objeto específico.
 
     :param UpdateView: Manejar actualizaciones de objetos.
@@ -117,7 +118,7 @@ class ActualizarUsuario(SuccessMessageMixin, UpdateView):
     form_class = RegistrarUsuarioForm
     template_name= 'gestion_usuarios/registrar_usuario.html'
     permission_required = 'gestion_usuarios.registrar_usuario'
-    success_url = reverse_lazy('listado_usuarios')
+    success_url = reverse_lazy('listar_usuarios')
     success_message = "El Usuario, fue actualizado exitosamente"
     
     def form_invalid(self, form):
@@ -130,7 +131,7 @@ class ActualizarUsuario(SuccessMessageMixin, UpdateView):
         return self.success_url
 
 
-class EliminarUsuario(SuccessMessageMixin, DeleteView):
+class EliminarUsuario(PermissionRequiredMixin, SuccessMessageMixin, DeleteView):
     """Clase que proporcionar una interfaz para la eliminación de un objeto.
 
     :param DeleteView: Gestiona la eliminación de objetos.
@@ -140,7 +141,7 @@ class EliminarUsuario(SuccessMessageMixin, DeleteView):
     model = Usuario
     template_name = 'gestion_usuarios/eliminar_usuario.html'
     permission_required = 'gestion_usuarios.eliminar_usuario'
-    success_url = reverse_lazy('listado_usuarios')
+    success_url = reverse_lazy('listar_usuarios')
     
     def delete(self, request, *args, **kwargs):
         try:
@@ -163,7 +164,7 @@ class EliminarUsuario(SuccessMessageMixin, DeleteView):
 
 ######-------Crud de los roles-------######
 
-class ListaRoles(ListView):
+class ListaRoles(MultiplePermissionsRequiredMixin, ListView):
     """Clase para proporcionar una vista que muestra una lista de objetos.
 
     :param ListView: Permite visualizar una vista
@@ -171,13 +172,13 @@ class ListaRoles(ListView):
     """       
     
     model = Group
-    template_name = 'gestion_roles/listado_roles.html'
+    template_name = 'gestion_roles/listar_roles.html'
     context_object_name = 'roles' 
-    permissions = {"any": ('gestion_roles.registrar_rol','gestion_roles.actualizar_rol','gestion_roles.eliminar_rol','gestion_usuarios.registrar_usuario', 'gestion_usuarios.consultar_usuarios', 'gestion_usuarios.actualizar_usuario', 'gestion_usuarios.eliminar_usuario' , 'gestion_usuarios.detalle_usuario' )}
+    permissions = {"any": ('gestion_roles.registrar_rol','gestion_roles.actualizar_rol','gestion_roles.eliminar_rol', 'gestion_usuarios.listar_roles')}
 
 
 
-class CrearRol(SuccessMessageMixin, CreateView):
+class CrearRol(PermissionRequiredMixin, SuccessMessageMixin, CreateView):
     """Clase que permite la creación de un nuevo objeto en la base de datos.
 
     :param CreateView: Maneja la creacion de objetos
@@ -188,7 +189,7 @@ class CrearRol(SuccessMessageMixin, CreateView):
     form_class = RolForm
     template_name = 'gestion_roles/registrar_rol.html'
     permission_required = 'gestion_roles.registrar_rol'
-    success_url = reverse_lazy('listado_roles')
+    success_url = reverse_lazy('listar_roles')
     success_message = "El Rol, fue creado exitosamente"
     
     def form_invalid(self, form):
@@ -202,18 +203,18 @@ class CrearRol(SuccessMessageMixin, CreateView):
 
 
 
-class ActualizarRol(SuccessMessageMixin, UpdateView):
+class ActualizarRol(PermissionRequiredMixin, SuccessMessageMixin, UpdateView):
     """Clase que permite la ctualización de los datos de un objeto específico.
 
     :param UpdateView: Manejar actualizaciones de objetos.
-    :type UpdateView: Objeto
+    :type UpdateView: Objeto 
     """       
     
     model = Group
     form_class = RolForm
     template_name= 'gestion_roles/registrar_rol.html'
     permission_required = 'gestion_roles.registrar_rol'
-    success_url = reverse_lazy('listado_roles')
+    success_url = reverse_lazy('listar_roles')
     success_message = "El Rol, fue actualizado exitosamente"
     
     def form_invalid(self, form):
@@ -226,7 +227,7 @@ class ActualizarRol(SuccessMessageMixin, UpdateView):
         return self.success_url
 
 
-class EliminarRol(SuccessMessageMixin, DeleteView):
+class EliminarRol(PermissionRequiredMixin, SuccessMessageMixin, DeleteView):
     """Clase que proporcionar una interfaz para la eliminación de un objeto.
 
     :param DeleteView: Gestiona la eliminación de objetos.
@@ -236,7 +237,7 @@ class EliminarRol(SuccessMessageMixin, DeleteView):
     model = Group
     template_name = 'gestion_roles/eliminar_rol.html'
     permission_required = 'gestion_roles.eliminar_rol'
-    success_url = reverse_lazy('listado_roles')
+    success_url = reverse_lazy('listar_roles')
     
     def delete(self, request, *args, **kwargs):
         try:

@@ -33,7 +33,7 @@ class Usuario(AbstractUser):
         default_permissions = ()
         permissions = (
             ('registrar_usuario', 'Puede Registrar Usuario'),
-            ('consultar_usuarios', 'Puede Consultar Usuarios'),
+            ('listar_usuarios', 'Puede Consultar Usuarios'),
             ('actualizar_usuario', 'Puede Actualizar Usuario'),
             ('eliminar_usuario', 'Puede Eliminar Usuario'),
             ('detalle_usuario', 'Puede Ver Detalle Usuario'), 
@@ -54,7 +54,7 @@ class Roles(models.Model):
         default_permissions = ()
         permissions = (
             ('registrar_rol', 'Puede Registrar Rol'),
-            ('consultar_roles', 'Puede Consultar Roles'),
+            ('listar_roles', 'Puede Consultar Roles'),
             ('actualizar_rol', 'Puede Actualizar Rol'),
             ('eliminar_rol', 'Puede eliminar Rol'),
         )
