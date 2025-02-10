@@ -33,7 +33,7 @@ class Cursos(models.Model):
 class Materias(models.Model):
     """Clase modelo Materias para el registro de datos de un Materia.
     
-    :param models: Administrar datos de una Materia en curso
+    :param models: Administrar datos de una Materia
     :type models: Objeto
     :return: Una instancia de la clase Materias con los datos registrados
     :rtype: Objeto

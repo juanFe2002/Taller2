@@ -12,53 +12,39 @@ from django.http import HttpResponseRedirect
 
 
 
+
 class Login(FormView):
     form_class = LoginForm
     template_name = 'gestion_usuarios/login.html'
-    success_url = reverse_lazy('listado_usuarios')
-    
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return redirect('listado_usuarios')
-        return super(Login, self).dispatch(request, *args, **kwargs)
-    
-    def form_valid(self, form):
-        usuario = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
-        if usuario is not None:
-            if  not usuario.is_staff and not usuario.is_superuser:
-                login(self.request, usuario)
-                siguiente = self.request.GET.get("next", None)
-                self.success_url = self.success_url if siguiente is None else siguiente
-                messages.success(self.request, "Sesión iniciada correctamente!")
-                return super(Login, self).form_valid(form)
-            if usuario.is_active:
-                    login(self.request, usuario)
-                    siguiente = self.request.GET.get("next", None)
-                    self.success_url = self.success_url if siguiente is None else siguiente
-                    messages.success(self.request, "Sesión iniciada correctamente.")
-                    return super(Login, self).form_valid(form)
-            else:
-                mensaje = "El Usuario %s no se encuentra Activo." % usuario.username
-        else:
-                mensaje = "El Usuario no existe o la Contraseña es incorrecta."
-        form.add_error('username', mensaje)
-        messages.error(self.request, mensaje)
-        return super(Login, self).form_valid(form)
-    
-    def form_invalid(self, form):
-        messages.error(self.request, "Ingrese un Usaurio y una contraseña válido para entrar el sistema")
-        return super(Login, self).form_invalid(form)
-    
+    success_url = 'inicio'  # Cambia esto por la URL a la que quieres redirigir después del login
 
-@login_required
-def Logout(request):
-    logout(request)
-    messages.success(request, "Sesión cerrada correctamente")
-    return redirect('login')
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('login')
+        return super().get(request, *args, **kwargs) 
+
+    def form_valid(self, form):
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(self.request, user)
+                messages.success(self.request, "Sesión iniciada correctamente.")
+                return super().form_valid(form)
+            else:
+                messages.error(self.request, "El usuario no está activo.")
+        else:
+            messages.error(self.request, "Usuario o contraseña incorrectos.")
+        return self.form_invalid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Error en el formulario. Inténtalo de nuevo.")
+        return super().form_invalid(form)
 
 
 class Inicio(TemplateView):
-    template_name = 'menu_inicial.html'
+    template_name = 'inicio.html'
     
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:

@@ -15,13 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.shortcuts import redirect
+from django.views.generic.base import RedirectView
 from gestion_usuarios.views import Login, Inicio
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("ingresar", view=Login.as_view(), name='login'),
-    path("", view=Inicio.as_view(), name='inicio'),
-    path("gestion_usuarios/", include("gestion_usuarios.urls")),
-    path("gestion_cursos/", include("gestion_cursos.urls")),
+    path('ingresar/', Login.as_view(), name='login'),  # Ruta para el login
+    path('inicio/', Inicio.as_view(), name='inicio'),  # Ruta para la página de inicio
+    path('', RedirectView.as_view(url='ingresar/')),  # Redirige la ruta raíz a la página de login
+    path('gestion_usuarios/', include('gestion_usuarios.urls')),
+    path('gestion_cursos/', include('gestion_cursos.urls')),
 ]

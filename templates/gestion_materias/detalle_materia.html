@@ -1,0 +1,19 @@
+{% extends "baseHTML/base_detalle.html" %}
+{% load static %}
+
+{% block titulo %}
+    Detalle
+{% endblock titulo %}
+
+
+{% block formulario %}
+    <div class="card">
+        <h1 class="card-title" >Detalles de la Materia</h1>
+        <div class="card-body">
+            <p class="card-text">Nombre: {{ usuario.nombre }}</p>
+            <p>Nombre de la materia: {{ usuario.nombre_curso }}</p>
+            <p>Maestro: {{ usuario.maestro }}</p>
+        </div>
+        <button class="button"><a style="text-decoration: none; color: adivceblue;" href="{% url 'listar_materias' %}">Volver al Listado</a></button>
+    </div>
+{% endblock formulario %}

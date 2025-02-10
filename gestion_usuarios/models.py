@@ -40,11 +40,11 @@ class Usuario(AbstractUser):
         )
         
     
-    def __str__(self):
-        return self.first_name + self.last_name 
     def save(self, *args, **kwargs):
-        self.username = self.email
-        self.password = self.first_name + self.last_name + '-' + str(self.identificacion)
+        if not self.username:  # Si el username no está definido
+            self.username = self.email  # Usa el email como username
+        if not self.pk:  # Solo si es un nuevo usuario
+            self.set_password(self.first_name + self.last_name + '-' + str(self.identificacion))
         super(Usuario, self).save(*args, **kwargs)
     
     
@@ -58,4 +58,3 @@ class Roles(models.Model):
             ('actualizar_rol', 'Puede Actualizar Rol'),
             ('eliminar_rol', 'Puede eliminar Rol'),
         )
-    

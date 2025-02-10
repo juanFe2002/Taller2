@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
+    'gestion_inscripciones',
     'gestion_cursos',
     'gestion_notas',
     'gestion_usuarios',
@@ -56,8 +57,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'configuracion.urls'
 
 AUTH_USER_MODEL = 'gestion_usuarios.Usuario'
-LOGIN_REDIRECT_URL = 'login'
-LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'inicio'  # Redirige al usuario a la página de inicio después del login
+LOGIN_URL = 'ingresar'
 
 TEMPLATES = [
     {

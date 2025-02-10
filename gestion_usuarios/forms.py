@@ -52,8 +52,8 @@ class LoginForm(forms.Form):
     username = forms.CharField(label="Correo Electronico", max_length=80, widget= forms.TextInput(attrs={
         'id': 'usernameInput', 'placeholder': 'Correo Electronico', 'class': 'form-control'}))
     
-    password = forms.CharField(label="Contraseña", max_length=50, widget=forms.TextInput(attrs={
-        'type': 'password', 'id': 'passwordInput', 'placeholder': 'Contraseña', 'class': 'form-control'}))
+    password = forms.CharField(label="Contraseña", max_length=50, widget=forms.PasswordInput(attrs={
+    'id': 'passwordInput', 'placeholder': 'Contraseña', 'class': 'form-control'}))
     
     
 class RolForm(forms.ModelForm):

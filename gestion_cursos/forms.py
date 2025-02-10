@@ -3,7 +3,6 @@ from django import forms
 from django.core.exceptions import ValidationError
 from .models import Materias
 from .models import Cursos
-from datetime import datetime
 
 
 

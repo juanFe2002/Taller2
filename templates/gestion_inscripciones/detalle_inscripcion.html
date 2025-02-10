@@ -1,0 +1,19 @@
+{% extends "baseHTML/base_detalle.html" %}
+{% load static %}
+
+{% block titulo %}
+    Detalle
+{% endblock titulo %}
+
+
+{% block formulario %}
+    <div class="card">
+        <h1 class="card-title" >Detalles de la inscripcion</h1>
+        <div class="card-body">
+            <p class="card-text">Nombre Estudiante: {{ inscripcion.estudiante }}</p>
+            <p>Nombre de la materia: {{ inscripcion.curso }}</p>
+            <p>Fecha Inscripcion: {{ inscripcion.fhecha_inscripcion|date:'d-m-Y'|default:'...' }}</p>
+        </div>
+        <button class="button"><a style="text-decoration: none; color: adivceblue;" href="{% url 'listar_inscripciones' %}">Volver al Listado</a></button>
+    </div>
+{% endblock formulario %}
